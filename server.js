@@ -17,7 +17,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/sendmail/:id', function(req, res) {
-  sendmail(req.params.id);
+  sendmail_v1(req.params.id);
   res.json({"success": "true"});
 });
 
@@ -31,7 +31,7 @@ process.on('uncaughtException', function(err) {
 
 ////////// MAIN FUNCTION //////////
 
-var sendmail = function(gumtreeId){
+var sendmail_v1 = function(gumtreeId){
   // Send email to a gumtree ticket seller
   var URL = "http://www.gumtree.com/reply/" + gumtreeId;
   phantom.create(function(ph){
@@ -44,9 +44,51 @@ var sendmail = function(gumtreeId){
         else {
           page.evaluate(function() {
             var DINGO = {};
-            DINGO.MSG = "Hi there, there are people who are looking for tickets like yours on Dingo. You might want to list them, it's super easy and zero commission."
+            DINGO.MSG = "Hi. I wanted to let you know that there are buyers looking for your tickets on a mobile app called Dingo. You should list them on the app, it's super easy with zero commission. Thanks, Sarah from Dingo.";
             DINGO.SenderName = "Dingo";
-            DINGO.SenderEmail = "hi@dingoapp.co.uk";
+
+            var dText = "";
+            var dLetters = "abcdefghijklmnopqrstuvwxyz";
+            for( var i=0; i < 10; i++ ) dText += dLetters.charAt(Math.floor(Math.random() * dLetters.length));
+            
+            DINGO.SenderEmail = dText + "@dingoapp.co.uk";
+            document.getElementsByTagName('textarea')[0].value=DINGO.MSG;
+            document.getElementsByTagName('input')[3].value=DINGO.SenderName;
+            document.getElementsByTagName('input')[4].value=DINGO.SenderEmail;
+            document.getElementsByTagName('button')[1].click();
+
+          });
+          setTimeout(function(){
+            //page.render("superNextPage.png");
+            ph.exit();
+          }, 5000); // 5 seconds
+        }
+      });
+    });
+  });
+};
+
+var sendmail_v2 = function(gumtreeId){
+  // Send email to a gumtree ticket seller
+  var URL = "http://www.gumtree.com/reply/" + gumtreeId;
+  phantom.create(function(ph){
+    ph.createPage(function(page){
+      console.log('opening page: ' + URL);
+      page.open(URL, function(status){
+        if (status !== 'success') {
+          console.log('Unable to access network');
+        }
+        else {
+          page.evaluate(function() {
+            var DINGO = {};
+            DINGO.MSG = "Hi, this is Sarah from our ticketing team at Gumtree. We´ve recently partnered with a secure and free ticket resale app called Dingo. If you´d like to check it out you can search for Dingo in the App Store or Google Play.";
+            DINGO.SenderName = "Sarah";
+            
+            var dText = "";
+            var dLetters = "abcdefghijklmnopqrstuvwxyz";
+            for( var i=0; i < 10; i++ ) dText += dLetters.charAt(Math.floor(Math.random() * dLetters.length));
+            
+            DINGO.SenderEmail = dText + "@dingoapp.co.uk";
             document.getElementsByTagName('textarea')[0].value=DINGO.MSG;
             document.getElementsByTagName('input')[3].value=DINGO.SenderName;
             document.getElementsByTagName('input')[4].value=DINGO.SenderEmail;
