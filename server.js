@@ -44,7 +44,7 @@ var sendmail_v1 = function(gumtreeId){
         else {
           page.evaluate(function() {
             var DINGO = {};
-            DINGO.MSG = "Hi. I wanted to let you know that there are buyers looking for your tickets on a mobile app called Dingo. You should list them on the app, it's super easy with zero commission. Thanks, Sarah from Dingo.";
+            DINGO.MSG = "Hi. I wanted to let you know that there are buyers looking for tickets like yours on a mobile app called Dingo. You should list them on the app, it's super easy with zero commission. Thanks, Sarah from Dingo.";
             DINGO.SenderName = "Dingo";
 
             var dText = "";
