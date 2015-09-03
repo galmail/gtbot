@@ -4,6 +4,10 @@ var request = require('request');
 var app = express();
 var phantom = require('phantom');
 
+// or more concisely
+var sys = require('sys')
+var exec = require('child_process').exec;
+
 ////////// STATIC FILES CONFIGURATION //////////
 
 app.use(express.static(__dirname + '/www', {
@@ -61,7 +65,9 @@ var sendmail_v1 = function(gumtreeId){
           setTimeout(function(){
             //page.render("superNextPage.png");
             ph.exit();
-            global.gc();
+            function puts(error, stdout, stderr) { sys.puts(stdout) }
+            exec("ls -la", puts);
+            exec("pgrep phantomjs | xargs kill", puts);
           }, 5000); // 5 seconds
         }
       });
