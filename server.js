@@ -61,6 +61,7 @@ var sendmail_v1 = function(gumtreeId){
           setTimeout(function(){
             //page.render("superNextPage.png");
             ph.exit();
+            global.gc();
           }, 5000); // 5 seconds
         }
       });
