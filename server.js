@@ -40,7 +40,7 @@ process.on('uncaughtException', function(err) {
 
 var sendmail_v1 = function(gumtreeId){
   // Send email to a gumtree ticket seller
-  var URL = "https://www.gumtree.com/reply/" + gumtreeId;
+  var URL = "http://www.gumtree.com/reply/" + gumtreeId;
   phantom.create(function(ph){
     ph.createPage(function(page){
       console.log('opening page: ' + URL);
