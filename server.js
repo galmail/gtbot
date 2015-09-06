@@ -18,6 +18,8 @@ app.use(express.static(__dirname + '/www', {
 
 app.get('/', function(req, res) {
   res.json({"gtbot": "up"});
+  function puts(error, stdout, stderr) { sys.puts(stdout) }
+  exec("ls -la", puts);
 });
 
 app.get('/sendmail/:id', function(req, res) {
