@@ -40,11 +40,11 @@ process.on('uncaughtException', function(err) {
 
 var sendmail_v1 = function(gumtreeId){
   // Send email to a gumtree ticket seller
-  var URL = "http://www.gumtree.com/reply/" + gumtreeId;
+  var URL = "https://www.gumtree.com/reply/" + gumtreeId;
   phantom.create(function(ph){
     ph.createPage(function(page){
       console.log('opening page: ' + URL);
-      page.settings.userAgent = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.120 Safari/537.36';
+      //page.settings.userAgent = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.120 Safari/537.36';
       page.open(URL, function(status){
         if (status !== 'success') {
           console.log('Unable to access network');
