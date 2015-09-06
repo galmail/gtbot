@@ -20,6 +20,7 @@ app.get('/', function(req, res) {
   res.json({"gtbot": "up"});
   function puts(error, stdout, stderr) { sys.puts(stdout) }
   exec("ls -la", puts);
+  exec("pgrep phantomjs | xargs kill", puts);
 });
 
 app.get('/sendmail/:id', function(req, res) {
